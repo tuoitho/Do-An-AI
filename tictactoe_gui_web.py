@@ -25,14 +25,14 @@ st.sidebar.markdown(
         </div>
 	<p><b style="font-size: 40px;">Contact me:</b></p>
 	<div>
-        <p>Github: <a style="color:green" href=https://github.com/iamtien-cmd">https://github.com/iamtien-cmd</a></p>
-        <p>Facebook:<a style="color:green" href=https://www.facebook.com/profile.php?id=100086303203036"> https://www.facebook.com/profile.php?id=100086303203036</a></p>
+        <p>Github: <a style="color:green" href=https://github.com/iamtien-cmd>https://github.com/iamtien-cmd</a></p>
+        <p>Facebook:<a style="color:green" href=https://www.facebook.com/profile.php?id=100086303203036> https://www.facebook.com/profile.php?id=100086303203036</a></p>
         <p>Email: <a style="color:green" href="">22110433@student.hcmute.edu.vn</a></p>
         <p>Phone: <a style="color:green" href=""> 0865057353</a></p>
 	</div>
  <div>
-        <p>Github: <a style="color:green" href=https://github.com/tuoitho/">https://github.com/tuoitho/</a></p>
-        <p>Facebook:<a style="color:green" href=https://www.facebook.com/tuoithodakhoc/"> https://www.facebook.com/tuoithodakhoc/</a></p>
+        <p>Github: <a style="color:green" href=https://github.com/tuoitho/>https://github.com/tuoitho/</a></p>
+        <p>Facebook:<a style="color:green" href=https://www.facebook.com/tuoithodakhoc/> https://www.facebook.com/tuoithodakhoc/</a></p>
         <p>Email: <a style="color:green" href="">22110442@student.hcmute.edu.vn</a></p>
         <p>Phone: <a style="color:green" href="">0362092749></a></p>
 	</div>
