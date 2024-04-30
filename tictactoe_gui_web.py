@@ -49,7 +49,7 @@ st.sidebar.markdown(
 st.markdown("""
 <style>
     [data-testid=stSidebar] {
-        background-color: #AAFAFA;
+        background-color: #f9e9d6;
     }
 </style>
 """, unsafe_allow_html=True)
