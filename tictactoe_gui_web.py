@@ -56,6 +56,9 @@ st.markdown("""
 
 def init(post_init=False):
     st.balloons()
+    st.balloons()
+    st.balloons()
+
     st.session_state.win = {HUMAN: 0, COMP: 0}
     st.session_state.board = np.full((3, 3), EMPTY_CELL, dtype=str)
     st.session_state.player = HUMAN
@@ -82,7 +85,6 @@ add_bg_from_local('images/bg.jpg')
 def check_state():
     if st.session_state.winner:
         st.success(f"Congrats! {st.session_state.winner} won the game! 🎈")
-        st.balloons()
         st.balloons()
         st.balloons()
 
