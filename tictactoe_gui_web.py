@@ -11,32 +11,32 @@ EMPTY_CELL = ' '
 st.sidebar.markdown(
     """
     <div class="red-text">
-        <b style="font-size: 40px;">Chào mừng đến với dự án của chúng tôi </b>
+        <b style="font-size: 40px;">Welcome to our project </b>
    	<div>
-        <p>Giảng viên hướng dẫn: </b>ThS.Trần Tiến Đức </p>
+        <p>Advisor: </b>ThS.Trần Tiến Đức </p>
         <p>Email:<a style="color:green" href="ductt@hcmute.edu.vn"> ductt@hcmute.edu.vn</a></p>
-         <p><b style="font-size: 40px;">Sinh viên thực hiện:</b></p>
+         <p><b style="font-size: 40px;">Our team:</b></p>
         <div>
     </p>
-        Họ và tên: Lê Đình Trí</p>
-        MSSV: 22110442 </p>
+        Full name: Lê Đình Trí</p>
+        ID: 22110442 </p>
     </p>
-        Họ và tên: Liên Huệ Tiên</p>
-        MSSV: 22110433 </p>
-    Trường Đại học Sư phạm Kĩ Thuật Hồ Chí Minh
+        Full name: Liên Huệ Tiên</p>
+        ID: 22110433 </p>
+    HCM University Technology and Education
         </div>
-	<p><b style="font-size: 40px;">Thông tin liên lạc:</b></p>
+	<p><b style="font-size: 40px;">Contact with:</b></p>
 	<div>
         <p>Github: <a style="color:green" href=https://github.com/iamtien-cmd>https://github.com/iamtien-cmd</a></p>
         <p>Facebook:<a style="color:green" href=https://www.facebook.com/profile.php?id=100086303203036> https://www.facebook.com/profile.php?id=100086303203036</a></p>
         <p>Email: <a style="color:green" href="">22110433@student.hcmute.edu.vn</a></p>
-        <p>SĐT: <a style="color:green" href=""> 0865057353</a></p>
+        <p>Phone: <a style="color:green" href=""> 0865057353</a></p>
 	</div>
  <div>
         <p>Github: <a style="color:green" href=https://github.com/tuoitho/>https://github.com/tuoitho/</a></p>
         <p>Facebook:<a style="color:green" href=https://www.facebook.com/tuoithodakhoc/> https://www.facebook.com/tuoithodakhoc/</a></p>
         <p>Email: <a style="color:green" href="">22110442@student.hcmute.edu.vn</a></p>
-        <p>SĐT: <a style="color:green" href="">0362092749</a></p>
+        <p>Phone: <a style="color:green" href="">0362092749</a></p>
 	</div>
     </div>
     """,
@@ -260,8 +260,8 @@ def main():
         """
         # ❎⭕ Tic Tac Toe
         
-        ##### Nhấn restart: tạo lại bảng và ở chế độ hai người chơi
-        ##### Nhấn easy hoặc difficult: chọn chế độ người và máy, máy ở chế độ dễ hoặc khó
+        ##### Restart: created the board and in Two-player mode
+        ##### Easy and Difficult: in One-player mode human and AI, you can choose easy or difficult AI's level
 
         """
     )
