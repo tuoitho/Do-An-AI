@@ -4,42 +4,39 @@ import base64
 import numpy as np
 import streamlit as st
 from streamlit.components.v1 import html
-
+import random
 HUMAN = '❌'
 COMP = '⭕'
 EMPTY_CELL = ' '
-
 st.sidebar.markdown(
     """
     <div class="red-text">
-        Chào mừng đến với dự án của chúng tôi
-         <p><b style="font-size: 40px;">Personal Information:</b></p>
+        <b style="font-size: 40px;">Chào mừng đến với dự án của chúng tôi </b>
+   	<div>
+        <p>Giảng viên hướng dẫn: </b>ThS.Trần Tiến Đức </p>
+        <p>Email:<a style="color:green" href="ductt@hcmute.edu.vn"> ductt@hcmute.edu.vn</a></p>
+         <p><b style="font-size: 40px;">Sinh viên thực hiện:</b></p>
         <div>
-    Student 1: </p>
-        Full name: Lê Đình Trí</p>
-        ID: 22110442 </p>
-    Student 2:</p>
-        Full name: Liên Huệ Tiên</p>
-        ID: 22110433 </p>
-    School name: HCM University of Technology and Education
+    </p>
+        Họ và tên: Lê Đình Trí</p>
+        MSSV: 22110442 </p>
+    </p>
+        Họ và tên: Liên Huệ Tiên</p>
+        MSSV: 22110433 </p>
+    Trường Đại học Sư phạm Kĩ Thuật Hồ Chí Minh
         </div>
-	<p><b style="font-size: 40px;">Contact me:</b></p>
+	<p><b style="font-size: 40px;">Thông tin liên lạc:</b></p>
 	<div>
         <p>Github: <a style="color:green" href=https://github.com/iamtien-cmd>https://github.com/iamtien-cmd</a></p>
         <p>Facebook:<a style="color:green" href=https://www.facebook.com/profile.php?id=100086303203036> https://www.facebook.com/profile.php?id=100086303203036</a></p>
         <p>Email: <a style="color:green" href="">22110433@student.hcmute.edu.vn</a></p>
-        <p>Phone: <a style="color:green" href=""> 0865057353</a></p>
+        <p>SĐT: <a style="color:green" href=""> 0865057353</a></p>
 	</div>
  <div>
         <p>Github: <a style="color:green" href=https://github.com/tuoitho/>https://github.com/tuoitho/</a></p>
         <p>Facebook:<a style="color:green" href=https://www.facebook.com/tuoithodakhoc/> https://www.facebook.com/tuoithodakhoc/</a></p>
         <p>Email: <a style="color:green" href="">22110442@student.hcmute.edu.vn</a></p>
-        <p>Phone: <a style="color:green" href="">0362092749></a></p>
-	</div>
-	<p><b style="font-size: 40px;">Instructor Information:</b></p>
-   	<div>
-        <p>- Teacher: Tran Tien Duc</p>
-        <p>- Email:<a style="color:green" href="ductt@hcmute.edu.vn"> ductt@hcmute.edu.vn</a></p>
+        <p>SĐT: <a style="color:green" href="">0362092749</a></p>
 	</div>
     </div>
     """,
@@ -56,15 +53,13 @@ st.markdown("""
 
 def init(post_init=False):
     st.balloons()
-    st.balloons()
-    st.balloons()
-
     st.session_state.win = {HUMAN: 0, COMP: 0}
     st.session_state.board = np.full((3, 3), EMPTY_CELL, dtype=str)
     st.session_state.player = HUMAN
     st.session_state.warning = False
     st.session_state.winner = None
     st.session_state.over = False
+    st.session_state.co = None
     
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -87,6 +82,7 @@ def check_state():
         st.success(f"Congrats! {st.session_state.winner} won the game! 🎈")
         st.balloons()
         st.balloons()
+        st.balloons()
 
     if st.session_state.warning and not st.session_state.over:
         st.warning('⚠️ This move already exist')
@@ -100,18 +96,21 @@ def check_state():
         st.session_state.over = True
 
 
-def computer_player():
-    depth = len(empty_cells(st.session_state.board))
-    if depth == 0 or game_over(st.session_state.board):
-        return
-    if depth == 9:
-        x = choice([0, 1, 2])
-        y = choice([0, 1, 2])
-    else:
-        move = minimax(st.session_state.board, depth, COMP)
-        x, y = move[0], move[1]
-        handle_click(x, y)
+def computer_player(co):
+    if st.session_state.player == COMP:  # Đảm bảo rằng chỉ có máy mới đánh
+        depth = len(empty_cells(st.session_state.board))
+        if depth == 0 or game_over(st.session_state.board):
+            return
+        if co == False:
+            move = minimax(st.session_state.board, depth, COMP)
+            x, y = move[0], move[1]
+            handle_click(x, y)
+        elif co == True:
+            move = easyGame(st.session_state.board, COMP)
+            x, y = move[0], move[1]
+            handle_click(x, y)
 
+        
 
 def handle_click(i, j):
     if [i, j] not in empty_cells(st.session_state.board):
@@ -130,8 +129,8 @@ button_style = """
         <style>
         .stButton > button {
             color: black;
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             font-size: 20px;
             border-radius:10px;
             padding: 20px;
@@ -208,7 +207,15 @@ def wins(state, player):
     else:
         return False
 
+def easyGame(state, player):
+    cells = empty_cells(state)
+    if not cells:  # Check if there are empty cells
+        return None  # No more empty cells left, return None
+    else:
+        return random.choice(cells)  # Return a random empty cell
 
+
+            
 
 def minimax(state, depth, player, alpha=-infinity, beta=+infinity):
     # AI function that chooses the best move.
@@ -247,55 +254,38 @@ def minimax(state, depth, player, alpha=-infinity, beta=+infinity):
         return [row, col, alpha]
     else:
         return [row, col, beta]
-# def minimax(state, depth, player):
-#     """
-#     AI function that choice the best move
-#     :param state: current state of the board
-#     :param depth: node index in the tree (0 <= depth <= 9),
-#     but never nine in this case (see iaturn() function)
-#     :param player: an human or a computer
-#     :return: a list with [the best row, best col, best score]
-#     """
-#     if player == COMP:
-#         best = [-1, -1, -infinity]
-#     else:
-#         best = [-1, -1, +infinity]
-
-#     if depth == 0 or game_over(state):
-#         score = evaluate(state)
-#         return [-1, -1, score]
-
-#     for cell in empty_cells(state):
-#         x, y = cell[0], cell[1]
-#         state[x][y] = player
-#         score = minimax(state, depth - 1, HUMAN if player == COMP else COMP)
-#         state[x][y] = EMPTY_CELL
-#         score[0], score[1] = x, y
-
-#         if player == COMP:
-#             if score[2] > best[2]:
-#                 best = score  # max value
-#         else:
-#             if score[2] < best[2]:
-#                 best = score  # min value
-
-#     return best
-
 
 def main():
     st.write(
         """
         # ❎⭕ Tic Tac Toe
+        
+        ##### Nhấn restart: tạo lại bảng và ở chế độ hai người chơi
+        ##### Nhấn easy hoặc difficult: chọn chế độ người và máy, máy ở chế độ dễ hoặc khó
+
         """
     )
     if "board" not in st.session_state:
         init()
 
-    reset, _ = st.columns([1, 1])
 
-    reset.button('Restart', on_click=init, args=(True,))
-    if st.session_state.player == COMP and not st.session_state.over:
-        computer_player()
+    reset, easy, difficult = st.columns([1, 1, 1])
+
+    if reset.button('Restart'):
+        init()
+        
+    if easy.button('Easy') and st.session_state.co != True:
+        st.session_state.co = True
+        computer_player(st.session_state.co)
+
+    if difficult.button('Difficult') and st.session_state.co != False:
+        st.session_state.co = False
+        computer_player(st.session_state.co)
+
+
+    if not st.session_state.over:
+        computer_player(st.session_state.co)
+
 
     cols = st.columns([55, 55, 55, 55, 55])
     for i, row in enumerate(st.session_state.board):
