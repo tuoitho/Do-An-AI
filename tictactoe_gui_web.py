@@ -1,13 +1,17 @@
 from math import inf as infinity
 from random import choice
 import base64
+import time
 import numpy as np
 import streamlit as st
 from streamlit.components.v1 import html
 
-HUMAN = '❌'
-COMP = '⭕'
+
+
+st.session_state.HUMAN = '❌'
+st.session_state.COMP = '🟢'
 EMPTY_CELL = ' '
+st.session_state.mode="Hard"
 st.sidebar.markdown(
     """
     <div class="red-text">
@@ -50,14 +54,14 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-def init(post_init=False):
-    st.balloons()
+
+def init(start=st.session_state.HUMAN):
     st.balloons()
     st.balloons()
 
-    st.session_state.win = {HUMAN: 0, COMP: 0}
+    st.session_state.win = {st.session_state.HUMAN: 0, st.session_state.COMP: 0}
     st.session_state.board = np.full((3, 3), EMPTY_CELL, dtype=str)
-    st.session_state.player = HUMAN
+    st.session_state.player = start
     st.session_state.warning = False
     st.session_state.winner = None
     st.session_state.over = False
@@ -98,16 +102,24 @@ def check_state():
 
 
 def computer_player():
+    # print("Computer's turn")
     depth = len(empty_cells(st.session_state.board))
     if depth == 0 or game_over(st.session_state.board):
         return
     if depth == 9:
         x = choice([0, 1, 2])
         y = choice([0, 1, 2])
-    else:
-        move = minimax(st.session_state.board, depth, COMP)
-        x, y = move[0], move[1]
         handle_click(x, y)
+    else:
+        if st.session_state.mode=="Easy":
+            move = choice(empty_cells(st.session_state.board))
+            x, y = move[0], move[1]
+            handle_click(x, y)
+        else:
+            move = minimax(st.session_state.board, depth, st.session_state.COMP)
+            x, y = move[0], move[1]
+            handle_click(x, y)
+    
 
 
 def handle_click(i, j):
@@ -116,11 +128,18 @@ def handle_click(i, j):
     elif not st.session_state.winner:
         st.session_state.warning = False
         st.session_state.board[i, j] = str(st.session_state.player)
-        st.session_state.player = COMP if st.session_state.player == HUMAN else HUMAN
-        winner = HUMAN if wins(st.session_state.board, HUMAN) else COMP if wins(
-            st.session_state.board, COMP) else None
+        # print("1",st.session_state.player)
+
+        st.session_state.player = st.session_state.COMP if st.session_state.player == st.session_state.HUMAN else st.session_state.HUMAN
+        # print("2",st.session_state.player)
+
+        winner = st.session_state.HUMAN if wins(st.session_state.board, st.session_state.HUMAN) else st.session_state.COMP if wins(
+            st.session_state.board, st.session_state.COMP) else None
         if winner != None:
             st.session_state.winner = winner
+    print(st.session_state.player)
+    if st.session_state.player == st.session_state.COMP and not st.session_state.over:
+        computer_player()
 
 
 button_style = """
@@ -130,8 +149,9 @@ button_style = """
             width: 90px;
             height: 90px;
             font-size: 20px;
-            border-radius:10px;
+            border-radius:20px;
             padding: 20px;
+            
         }
         </style>
         """
@@ -154,9 +174,9 @@ def evaluate(state):
     :param state: the state of the current board
     :return: +1 if the computer wins; -1 if the human wins; 0 draw
     """
-    if wins(state, COMP):
+    if wins(state, st.session_state.COMP):
         score = +1
-    elif wins(state, HUMAN):
+    elif wins(state, st.session_state.HUMAN):
         score = -1
     else:
         score = 0
@@ -171,7 +191,7 @@ def game_over(state):
     :param state: the state of the current board
     :return: True if the human or computer wins
     """
-    return wins(state, HUMAN) or wins(state, COMP)
+    return wins(state, st.session_state.HUMAN) or wins(state, st.session_state.COMP)
 
 
 def empty_cells(state):
@@ -206,7 +226,6 @@ def wins(state, player):
         return False
 
 
-
 def minimax(state, depth, player, alpha=-infinity, beta=+infinity):
     # AI function that chooses the best move.
     row, col = -1, -1
@@ -216,14 +235,14 @@ def minimax(state, depth, player, alpha=-infinity, beta=+infinity):
     for cell in empty_cells(state):
         x, y = cell[0], cell[1]
         state[x][y] = player
-        score = minimax(state, depth - 1, HUMAN if player ==
-                        COMP else COMP, alpha, beta)
-        if wins(state,COMP):
+        score = minimax(state, depth - 1, st.session_state.HUMAN if player ==
+                        st.session_state.COMP else st.session_state.COMP, alpha, beta)
+        if wins(state,st.session_state.COMP):
             state[x][y] =' '
             score[0],score[1]=x,y
             return score
         state[x][y] = EMPTY_CELL
-        if player == COMP:
+        if player == st.session_state.COMP:
             if score[2] > alpha:
                 row = x
                 col = y
@@ -240,61 +259,69 @@ def minimax(state, depth, player, alpha=-infinity, beta=+infinity):
         if alpha >= beta:
             break
 
-    if player == COMP:
+    if player == st.session_state.COMP:
         return [row, col, alpha]
     else:
         return [row, col, beta]
-# def minimax(state, depth, player):
-#     """
-#     AI function that choice the best move
-#     :param state: current state of the board
-#     :param depth: node index in the tree (0 <= depth <= 9),
-#     but never nine in this case (see iaturn() function)
-#     :param player: an human or a computer
-#     :return: a list with [the best row, best col, best score]
-#     """
-#     if player == COMP:
-#         best = [-1, -1, -infinity]
-#     else:
-#         best = [-1, -1, +infinity]
 
-#     if depth == 0 or game_over(state):
-#         score = evaluate(state)
-#         return [-1, -1, score]
+st.markdown("""
+	<style>
+	.stSelectbox:first-of-type > div[data-baseweb="select"] > div {
+	      background-color: yellow;
+    	      padding: 20px;
+        font-size: 20px;
+        font-weight: bold;
+	}
+	</style>
+""", unsafe_allow_html=True)
 
-#     for cell in empty_cells(state):
-#         x, y = cell[0], cell[1]
-#         state[x][y] = player
-#         score = minimax(state, depth - 1, HUMAN if player == COMP else COMP)
-#         state[x][y] = EMPTY_CELL
-#         score[0], score[1] = x, y
 
-#         if player == COMP:
-#             if score[2] > best[2]:
-#                 best = score  # max value
-#         else:
-#             if score[2] < best[2]:
-#                 best = score  # min value
 
-#     return best
-
+   
 
 def main():
     st.write(
         """
-        # ❎⭕ Tic Tac Toe
+        # ❎🔴 Tic Tac Toe
         """
     )
     if "board" not in st.session_state:
         init()
+    col1,col2,col3=st.columns([1,1,2])
+    with col1:
+        di_truoc=st.selectbox("Chọn người chơi đi trước",["HUMAN","PC"])
+    with col2:
+        chon_ki_hieu_human = st.selectbox("Chọn kí hiệu của bạn",["❌","🟢"])
+    with col3:
+        mode=st.selectbox("Chọn chế độ chơi",["Hard(using Minimax)","Easy"])
+    _,colmid,_=st.columns([1,1,1])
+    with colmid:
+        OK = st.button("Apply",type="primary")
+    if chon_ki_hieu_human == "❌":
+        st.session_state.HUMAN = '❌'
+        st.session_state.COMP = '🟢'
+    else:
+        st.session_state.HUMAN = '🟢'
+        st.session_state.COMP = '❌'
 
-    reset, _ = st.columns([1, 1])
+    
 
-    reset.button('Restart', on_click=init, args=(True,))
-    if st.session_state.player == COMP and not st.session_state.over:
-        computer_player()
+    if OK:
+        if mode == "Easy":
+            st.session_state.mode="Easy"
+        else:
+            st.session_state.mode="Hard"
+        if di_truoc == "HUMAN":
+            init()
+            st.session_state.player = st.session_state.HUMAN
+        else:
+            init()
+            st.session_state.player = st.session_state.COMP
+            computer_player()
 
-    cols = st.columns([55, 55, 55, 55, 55])
+
+
+    cols = st.columns([1, 1, 1, 1, 1,1])
     for i, row in enumerate(st.session_state.board):
 
         for j, field in enumerate(row):
