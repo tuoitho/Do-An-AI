@@ -4,9 +4,7 @@ The web application has been deployed here: [Web App Link](https://ttt-game.stre
 
 ⏳ It may take some time to wake it up if it is sleeping.
 
-The web application has been deployed here: [link](https://ttt-game.streamlit.app/)
 
-It will take some time to wake it up, if it is sleeping.
 
 🔧 Setup Instructions
 Option 1: Use the Deployed Web Application
