@@ -3,7 +3,7 @@
 
 Instructions:
 
-The web application has been deployed here: [link](https://ttt-game.streamlit.app/)
+The web application has been deployed here: [link](https://tuoithodakhoc.streamlit.app/)
 
 It will take some time to wake it up, if it is sleeping.
 
@@ -19,12 +19,6 @@ run the following command in the terminal:
 
 streamlit run <file name>
 
-example: streamlit run tictactoe_gui_web.py
-
-You can open visual studio code, open the folder containing the source code, then open the terminal with the shortcut Ctrl+Shift+`, then type streamlit run tictactoe_gui_web.py
-
-You can also copy the absolute path of the file you want to open and then run the command on any command prompt window you want (eg cmd, powershell,...), you can also run directly on the address bar of Explorer
-
 Step 3:
 
 Follow me to see more fun projects!
@@ -33,7 +27,7 @@ Follow me to see more fun projects!
 
 HDSD:
 
-Ứng dụng web đã được deploy tại đây: [link](https://ttt-game.streamlit.app/){:target="_blank"}
+Ứng dụng web đã được deploy tại đây: [link](https://tuoithodakhoc.streamlit.app/){:target="_blank"}
 
 Sẽ cần 1 khoảng thời gian để đánh thức nó, nếu nó đã ngủ.
 
