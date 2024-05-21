@@ -21,4 +21,4 @@ The web application has been deployed here: [Web App Link](https://ttt-game.stre
 - Open your terminal.
 - Execute the following command:
   ```bash
-  streamlit run <file_name>
+  streamlit run tictactoe_gui_web.py
