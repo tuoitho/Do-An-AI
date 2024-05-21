@@ -3,7 +3,7 @@
 
 Instructions:
 
-The web application has been deployed here: [link](https://tuoithodakhoc.streamlit.app/)
+The web application has been deployed here: [link](https://ttt-game.streamlit.app/)
 
 It will take some time to wake it up, if it is sleeping.
 
@@ -27,7 +27,7 @@ Follow me to see more fun projects!
 
 HDSD:
 
-Ứng dụng web đã được deploy tại đây: [link](https://tuoithodakhoc.streamlit.app/){:target="_blank"}
+Ứng dụng web đã được deploy tại đây: [link](https://ttt-game.streamlit.app/){:target="_blank"}
 
 Sẽ cần 1 khoảng thời gian để đánh thức nó, nếu nó đã ngủ.
 
