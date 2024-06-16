@@ -17,7 +17,7 @@ st.sidebar.markdown(
     <div class="red-text">
         <b style="font-size: 40px;">Welcome to our project </b>
    	<div>
-        <p>Advisor: </b>ThS.Trần Tiến Đức </p>
+        <p>Advisor: </b>TS.Trần Tiến Đức </p>
         <p>Email:<a style="color:green" href="ductt@hcmute.edu.vn"> ductt@hcmute.edu.vn</a></p>
          <p><b style="font-size: 40px;">Our team:</b></p>
         <div>
